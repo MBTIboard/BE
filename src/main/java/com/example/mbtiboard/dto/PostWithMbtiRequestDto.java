@@ -8,7 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostRequestDto {
+public class PostWithMbtiRequestDto {
     private String title;
     private String content;
+    private String cateMbti;
 }
