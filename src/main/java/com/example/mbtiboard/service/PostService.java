@@ -55,4 +55,12 @@ public class PostService {
         post.update(requestDto);
         return new MsgResponseDto("게시글 수정 성공",HttpStatus.OK.value());
     }
+    @Transactional
+    public MsgResponseDto deletePost(Long id, UserDetailsImpl userDetails) {
+        Post post = postRepository.findByIdAndUser(id,userDetails.getUser()).orElseThrow(
+                () -> new RuntimeException("해당 글이 없습니다.")
+        );
+        postRepository.delete(post);
+        return  new MsgResponseDto("게시글 삭제 성공",HttpStatus.OK.value());
+    }
 }
