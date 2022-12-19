@@ -1,10 +1,13 @@
-package com.example.mbtiboard.service;
+package com.example.mbtiboard.sevice;
 
-import com.example.mbtiboard.dto.PostRequestDto;
-import com.example.mbtiboard.dto.PostResponseDto;
+import com.example.mbtiboard.dto.*;
+import com.example.mbtiboard.dto.ResponseDto;
 import com.example.mbtiboard.entity.Post;
+import com.example.mbtiboard.entity.User;
 import com.example.mbtiboard.repository.PostRepository;
+import com.example.mbtiboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,43 +16,61 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-   //리포시토리와 연결
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+    private final ServiceConfig serviceConfig;
 
-    //게시글 get
-    @Transactional(readOnly = true)
-    public List<Post> getPosts() {
-
-        List<Post> allMemoByOrderByModifiedAtDesc = postRepository.findAllMemoByOrderByModifiedAtDesc();
-
-        return allMemoByOrderByModifiedAtDesc;
+    @Transactional
+    public MsgResponseDto savePost(PostWithMbtiRequestDto requestDto, User user){
+        Post post = postRepository.saveAndFlush(new Post(requestDto,user));
+        postRepository.save(post);
+        return new MsgResponseDto("Post 성공", HttpStatus.OK.value());
     }
-    //게시글 post
 
-    //특정 게시글 조회
+    @Transactional(readOnly = true)
+    public PostListResponseDto getPosts(){
+        PostListResponseDto postListResponseDto = new PostListResponseDto();
+        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
+        for(Post post : posts){
+            postListResponseDto.addPost(new PostResponseDto(post));
+        }
+        return postListResponseDto;
+    }
+
     @Transactional(readOnly = true)
     public PostResponseDto getPost(Long id){
         Post post = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+                () -> new RuntimeException("해당 글이 없습니다.")
         );
         return new PostResponseDto(post);
     }
 
-    //특정게시글 수정 //if문 써서 id의 존재 확인 코드
 
-
-    //특정게시글삭제 //id값 확인
     @Transactional
-    public Long deletePost(Long id, String password){
-        System.out.println("게시글 삭제 id,password : "+id +","+password);
-       if(postRepository.existsByIdAndPassword(id, password)){
-           postRepository.deleteById(id);
-           System.out.println("해당 id값에 해당하는 게시글 삭제 완료");
-           return id;
-       }
-        System.out.println("게시글 삭제 id,password : 작동하지 않음") ;
-        return id;
+    public MsgResponseDto updatePost(Long id, PostRequestDto requestDto, UserDetailsImpl userDetails) {
+        if(postRepository.existsByIdAndUser(id,userDetails.getUser() )) {
+            Post post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
+                    () -> new RuntimeException("해당 글이 없습니다.")
+            );
+            post.update(requestDto);
+            return new MsgResponseDto("게시글 수정 성공",HttpStatus.OK.value());
+        }else{
+            return new MsgResponseDto("게시글 수정 실패",HttpStatus.BAD_REQUEST.value());
+        }
+
     }
+    @Transactional
+    public MsgResponseDto deletePost(Long id, UserDetailsImpl userDetails) {
+        if(postRepository.existsByIdAndUser(id,userDetails.getUser() )) {
+            Post post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
+                    () -> new RuntimeException("해당 글이 없습니다.")
+            );
+            postRepository.delete(post);
+            return  new MsgResponseDto("게시글 삭제 성공",HttpStatus.OK.value());
+        }else{
+            return new MsgResponseDto("게시글 삭제 실패",HttpStatus.BAD_REQUEST.value() );
+        }
 
-
+    }
 }

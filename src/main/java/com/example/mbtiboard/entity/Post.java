@@ -1,6 +1,7 @@
 package com.example.mbtiboard.entity;
 
 import com.example.mbtiboard.dto.PostRequestDto;
+import com.example.mbtiboard.dto.PostWithMbtiRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,9 +18,14 @@ public class Post extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private String content;
+
+    @Column(nullable = false)
+    private String cateMbti;
 
 
     @ManyToOne
@@ -27,12 +33,23 @@ public class Post extends Timestamped {
     private User user;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true )
+    @OrderBy("id desc")
     private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany(mappedBy =  "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostLikes> postLikeList =new ArrayList<>();
 
 
+    public Post(PostWithMbtiRequestDto requestDto, User user){
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.user = user;
+    }
+
+    public void update(PostRequestDto requestDto){
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+    }
 
 
 }
