@@ -1,5 +1,9 @@
 package com.example.mbtiboard.Util;
 
+import com.example.mbtiboard.entity.User;
+import com.example.mbtiboard.jwt.JwtUtil;
+import com.example.mbtiboard.repository.UserRepository;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
