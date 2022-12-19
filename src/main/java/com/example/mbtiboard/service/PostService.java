@@ -1,11 +1,13 @@
-package com.example.mbtiboard.sevice;
+package com.example.mbtiboard.service;
 
 import com.example.mbtiboard.dto.*;
 import com.example.mbtiboard.dto.ResponseDto;
 import com.example.mbtiboard.entity.Post;
 import com.example.mbtiboard.entity.User;
+import com.example.mbtiboard.jwt.JwtUtil;
 import com.example.mbtiboard.repository.PostRepository;
 import com.example.mbtiboard.repository.UserRepository;
+import com.example.mbtiboard.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,6 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
-    private final ServiceConfig serviceConfig;
 
     @Transactional
     public ResponseDto savePost(PostWithMbtiRequestDto requestDto, User user){

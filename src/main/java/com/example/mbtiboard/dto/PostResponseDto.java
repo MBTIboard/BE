@@ -30,7 +30,7 @@ public class PostResponseDto {
     public PostResponseDto(Post post){
         this.id = post.getId();
         this.username = post.getUser().getUsername();
-        this.userMbti = post.getUser().getMbti();
+        this.userMbti = post.getUser().getUserMbti();
         this.cateMbti = post.getCateMbti();
         this.title  = post.getTitle();
         this.content = post.getContent();
