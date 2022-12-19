@@ -49,18 +49,28 @@ public class PostService {
 
     @Transactional
     public MsgResponseDto updatePost(Long id, PostRequestDto requestDto, UserDetailsImpl userDetails) {
-        Post post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
-                () -> new RuntimeException("해당 글이 없습니다.")
-        );
-        post.update(requestDto);
-        return new MsgResponseDto("게시글 수정 성공",HttpStatus.OK.value());
+        if(postRepository.existsByIdAndUser(id,userDetails.getUser() )) {
+            Post post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
+                    () -> new RuntimeException("해당 글이 없습니다.")
+            );
+            post.update(requestDto);
+            return new MsgResponseDto("게시글 수정 성공",HttpStatus.OK.value());
+        }else{
+            return new MsgResponseDto("게시글 수정 실패",HttpStatus.BAD_REQUEST.value());
+        }
+
     }
     @Transactional
     public MsgResponseDto deletePost(Long id, UserDetailsImpl userDetails) {
-        Post post = postRepository.findByIdAndUser(id,userDetails.getUser()).orElseThrow(
-                () -> new RuntimeException("해당 글이 없습니다.")
-        );
-        postRepository.delete(post);
-        return  new MsgResponseDto("게시글 삭제 성공",HttpStatus.OK.value());
+        if(postRepository.existsByIdAndUser(id,userDetails.getUser() )) {
+            Post post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
+                    () -> new RuntimeException("해당 글이 없습니다.")
+            );
+            postRepository.delete(post);
+            return  new MsgResponseDto("게시글 삭제 성공",HttpStatus.OK.value());
+        }else{
+            return new MsgResponseDto("게시글 삭제 실패",HttpStatus.BAD_REQUEST.value() );
+        }
+
     }
 }

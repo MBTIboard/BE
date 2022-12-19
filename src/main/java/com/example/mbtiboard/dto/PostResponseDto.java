@@ -17,7 +17,7 @@ public class PostResponseDto {
 
     private Long id;
     private String title;
-    private String nickname;
+    private String username;
     private String content;
     private String userMbti;
     private String cateMbti;
@@ -28,7 +28,7 @@ public class PostResponseDto {
 
     public PostResponseDto(Post post){
         this.id = post.getId();
-        this.nickname = post.getUser().getNickname();
+        this.username = post.getUser().getUsername();
         this.userMbti = post.getUser().getMbti();
         this.cateMbti = post.getCateMbti();
         this.title  = post.getTitle();
