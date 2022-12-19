@@ -2,6 +2,7 @@ package com.example.mbtiboard.entity;
 
 import javax.persistence.*;
 
+
 public class PostLikes {
 
     @Id

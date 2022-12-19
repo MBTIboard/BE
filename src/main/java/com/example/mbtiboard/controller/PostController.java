@@ -23,10 +23,7 @@ public class PostController {
     public List<Post> getPosts(){ return postService.getPosts();}
 
     //게시글 작성 postmapping
-    @PostMapping("/api/post")
-    public Post createPost(@RequestBody PostRequestDto requestDto){
-        return postService.createPost(requestDto);
-    }
+
 
     //선택한 게시글 조회
     @GetMapping("/api/post/{id}")
@@ -35,10 +32,7 @@ public class PostController {
     }
 
     //선택한 게시글 수정
-    @PutMapping("/api/post/{id}")
-    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
-        return postService.updatePost(id,requestDto);
-    }
+
 
     //선택한 게시글 삭제
     @DeleteMapping("/api/post/{id}") //??밑에 매개변수로 무슨 dto로 받아야하지??

@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllMemoByOrderByModifiedAtDesc();
 
-    Optional<Post> findByIdAndPassword(Long id, String password);
+//    Optional<Post> findByIdAndPassword(Long id, String password);
 
     Boolean existsByIdAndPassword(Long id,String password);
 }
