@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 public class LikesController {
     private final LikesService likesService;
 
-    @PostMapping("/like/{postId}")
+    @PostMapping("/like/post/{postId}")
     public ResponseDto likesPost(@PathVariable Long postId, HttpServletRequest request) {
         return likesService.likePost(postId, request);
     }
 
-    @PostMapping ("/like/{commentId}")
+    @PostMapping ("/like/comment/{commentId}")
     public ResponseDto likesComment(@PathVariable Long commentId, HttpServletRequest request) {
         return likesService.likeComment(commentId, request);
     }

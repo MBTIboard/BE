@@ -10,6 +10,7 @@ import com.example.mbtiboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +23,7 @@ public class LikesService {
     private final PostRepository postRepository;
     private final UserUtil userUtil;
 
+    @Transactional
     public ResponseDto likePost(Long postId, HttpServletRequest request) {
         User user = userUtil.getUserInfo(request);
         Post post = postRepository.findById(postId).orElseThrow(
@@ -39,6 +41,7 @@ public class LikesService {
         }
     }
 
+    @Transactional
     public ResponseDto likeComment(Long commentId, HttpServletRequest request) {
         User user = userUtil.getUserInfo(request);
         Comment comment = commentRepository.findById(commentId).orElseThrow(

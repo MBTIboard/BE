@@ -3,7 +3,7 @@ package com.example.mbtiboard.controller;
 
 import com.example.mbtiboard.dto.*;
 import com.example.mbtiboard.dto.ResponseDto;
-import com.example.mbtiboard.service.PostService;
+import com.example.mbtiboard.security.UserDetailsImpl;
 import com.example.mbtiboard.sevice.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +17,7 @@ public class PostController {
 
     @PostMapping("/post")
     public ResponseDto savePost(@RequestBody PostWithMbtiRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        postService.savePost(requestDto,userDetails.getUser());
+        return postService.savePost(requestDto,userDetails.getUser());
     }
 
     @GetMapping("/posts")
@@ -36,7 +36,8 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{id}")
-    public ResponseDto deletePost(Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseDto deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
         return postService.deletePost(id, userDetails);
     }
 }

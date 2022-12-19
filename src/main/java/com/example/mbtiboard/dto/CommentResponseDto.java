@@ -13,7 +13,7 @@ public class CommentResponseDto {
     private String content;
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;
-    private Long likeCount=0l;
+    private int likeCount=0;
 
     public CommentResponseDto(Comment comment) {
         this.num = comment.getId();
@@ -21,15 +21,16 @@ public class CommentResponseDto {
         this.content = comment.getContent();
         this.createAt = comment.getCreatedAt();
         this.modifiedAt = comment.getModifiedAt();
+        this.likeCount = comment.getCommentLikes().size();
     }
 
-    public CommentResponseDto(Comment comment, Long commentLikeCnt) {
-        this.num = comment.getId();
-        this.username = comment.getUser().getUsername();
-        this.content = comment.getContent();
-        this.createAt = comment.getCreatedAt();
-        this.modifiedAt = comment.getModifiedAt();
-        this.likeCount = commentLikeCnt;
-    }
+//    public CommentResponseDto(Comment comment, int commentLikeCnt) {
+//        this.num = comment.getId();
+//        this.username = comment.getUser().getUsername();
+//        this.content = comment.getContent();
+//        this.createAt = comment.getCreatedAt();
+//        this.modifiedAt = comment.getModifiedAt();
+//        this.likeCount = commentLikeCnt;
+//    }
 
 }

@@ -4,8 +4,10 @@ import com.example.mbtiboard.dto.*;
 import com.example.mbtiboard.dto.ResponseDto;
 import com.example.mbtiboard.entity.Post;
 import com.example.mbtiboard.entity.User;
+import com.example.mbtiboard.jwt.JwtUtil;
 import com.example.mbtiboard.repository.PostRepository;
 import com.example.mbtiboard.repository.UserRepository;
+import com.example.mbtiboard.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,13 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
-    private final ServiceConfig serviceConfig;
+//    private final ServiceConfig serviceConfig;
 
     @Transactional
     public ResponseDto savePost(PostWithMbtiRequestDto requestDto, User user){
+        System.out.println("============================================");
+        System.out.println(requestDto.getCateMbti());
+
         Post post = postRepository.saveAndFlush(new Post(requestDto,user));
         postRepository.save(post);
         return new ResponseDto("Post 성공", HttpStatus.OK.value());

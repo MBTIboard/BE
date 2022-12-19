@@ -1,7 +1,13 @@
 package com.example.mbtiboard.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Getter
+@Entity
+@NoArgsConstructor
 public class LikesPost {
 
     @Id

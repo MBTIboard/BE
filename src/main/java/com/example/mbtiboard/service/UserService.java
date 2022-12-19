@@ -107,7 +107,7 @@ public class UserService {
         String email = findIdDto.getEmail();
         String mbti = findIdDto.getMbti();
 
-        User user = userRepository.findByEmailAndmbti(email, mbti).orElseThrow(
+        User user = userRepository.findByEmailAndUserMbti(email, mbti).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디를 찾을 수 없습니다.")
         );
         return user.getUsername();
