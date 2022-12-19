@@ -24,7 +24,7 @@ public class Comment extends Timestamped {
     private User user;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
-    private List<CommentLikes> commentLikes = new ArrayList<>();
+    private List<LikesComment> commentLikes = new ArrayList<>();
 
     public Comment(CommentRequestDto requestDto, Post post, User user) {
         this.content = requestDto.getContent();

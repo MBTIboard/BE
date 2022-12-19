@@ -16,7 +16,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/post")
-    public MsgResponseDto savePost(@RequestBody PostWithMbtiRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseDto savePost(@RequestBody PostWithMbtiRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         postService.savePost(requestDto,userDetails.getUser());
     }
 
@@ -31,12 +31,12 @@ public class PostController {
     }
 
     @PutMapping("/post/{id}")
-    public MsgResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return postService.updatePost(id,requestDto,userDetails);
     }
 
     @DeleteMapping("/post/{id}")
-    public MsgResponseDto deletePost( Long id,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseDto deletePost(Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return postService.deletePost(id, userDetails);
     }
 }

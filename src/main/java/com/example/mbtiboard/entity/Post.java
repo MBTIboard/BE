@@ -37,7 +37,7 @@ public class Post extends Timestamped {
     private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany(mappedBy =  "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostLikes> postLikeList =new ArrayList<>();
+    private List<LikesPost> postLikeList =new ArrayList<>();
 
 
     public Post(PostWithMbtiRequestDto requestDto, User user){
