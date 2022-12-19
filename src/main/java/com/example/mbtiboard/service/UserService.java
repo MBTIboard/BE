@@ -35,7 +35,6 @@ public class UserService {
     public MsgResponseDto signup(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
         String password = signupRequestDto.getPassword();
-        String nickname = signupRequestDto.getNickname();
         String email = signupRequestDto.getEmail();
         String mbti = signupRequestDto.getMbti();
 
@@ -75,7 +74,7 @@ public class UserService {
         //pw암호화
         password = passwordEncoder.encode(password);
 
-        User user = new User(username, password, nickname, email, mbti, role);
+        User user = new User(username, password, email, mbti, role);
         userRepository.save(user);
 
         return new MsgResponseDto("회원가입성공", HttpStatus.OK.value());
