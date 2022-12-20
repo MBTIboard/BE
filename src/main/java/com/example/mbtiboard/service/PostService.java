@@ -22,8 +22,12 @@ public class PostService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
+
     @Transactional
     public ResponseDto savePost(PostWithMbtiRequestDto requestDto, User user){
+        System.out.println("============================================");
+        System.out.println(requestDto.getCateMbti());
+
         Post post = postRepository.saveAndFlush(new Post(requestDto,user));
         postRepository.save(post);
         return new ResponseDto("Post 성공", HttpStatus.OK.value());

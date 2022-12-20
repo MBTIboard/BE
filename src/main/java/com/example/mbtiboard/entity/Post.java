@@ -43,6 +43,7 @@ public class Post extends Timestamped {
     public Post(PostWithMbtiRequestDto requestDto, User user){
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.cateMbti = requestDto.getCateMbti();
         this.user = user;
     }
 

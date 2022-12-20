@@ -36,7 +36,8 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{id}")
-    public ResponseDto deletePost(Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseDto deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
         return postService.deletePost(id, userDetails);
     }
 }

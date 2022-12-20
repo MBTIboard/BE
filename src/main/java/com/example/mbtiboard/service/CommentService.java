@@ -6,6 +6,7 @@ import com.example.mbtiboard.dto.ResponseDto;
 import com.example.mbtiboard.entity.Comment;
 import com.example.mbtiboard.entity.Post;
 import com.example.mbtiboard.entity.User;
+import com.example.mbtiboard.entity.UserRoleEnum;
 import com.example.mbtiboard.repository.CommentRepository;
 import com.example.mbtiboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;

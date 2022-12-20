@@ -28,6 +28,8 @@ public class PostResponseDto {
     private List<CommentResponseDto> commentList = new ArrayList<>();
 
     public PostResponseDto(Post post){
+        System.out.println("================================");
+        System.out.println(post.getCommentList().size());
         this.id = post.getId();
         this.username = post.getUser().getUsername();
         this.userMbti = post.getUser().getUserMbti();
