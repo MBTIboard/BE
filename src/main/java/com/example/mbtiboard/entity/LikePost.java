@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class LikesPost {
+public class LikePost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +26,10 @@ public class LikesPost {
     private boolean likeCheck;
 
 
-    public LikesPost(User user, Post post) {
+    public LikePost(User user, Post post) {
         this.user = user;
         this.post = post;
         this.likeCheck = true;
     }
 
-    public void likeCancel() {
-        this.likeCheck=false;
-    }
-
-    public void likepost() {
-        this.likeCheck = true;
-    }
 }

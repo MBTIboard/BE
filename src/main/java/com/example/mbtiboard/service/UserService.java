@@ -6,6 +6,7 @@ import com.example.mbtiboard.entity.UserRoleEnum;
 import com.example.mbtiboard.jwt.JwtUtil;
 import com.example.mbtiboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     // ADMIN_TOKEN
-    private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+    @Value("${admin.secret.token}")
+    private String ADMIN_TOKEN;
 
     String rePw;
 
