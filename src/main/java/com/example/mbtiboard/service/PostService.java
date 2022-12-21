@@ -3,9 +3,8 @@ package com.example.mbtiboard.service;
 import com.example.mbtiboard.dto.*;
 import com.example.mbtiboard.entity.Post;
 import com.example.mbtiboard.entity.User;
-import com.example.mbtiboard.jwt.JwtUtil;
+import com.example.mbtiboard.entity.UserRoleEnum;
 import com.example.mbtiboard.repository.PostRepository;
-import com.example.mbtiboard.repository.UserRepository;
 import com.example.mbtiboard.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -64,15 +63,24 @@ public class PostService {
     }
     @Transactional
     public MsgResponseDto deletePost(Long id, UserDetailsImpl userDetails) {
-        if(postRepository.existsByIdAndUser(id,userDetails.getUser() )) {
-            Post post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
-                    () -> new RuntimeException("해당 글이 없습니다.")
-            );
-            postRepository.delete(post);
-            return  new MsgResponseDto("게시글 삭제 성공",HttpStatus.OK.value());
-        }else{
-            return new MsgResponseDto("게시글 삭제 실패",HttpStatus.BAD_REQUEST.value() );
-        }
+       if(postRepository.existsById(id)){
+           Post post;
+           if(userDetails.getUser().getRole().equals(UserRoleEnum.ADMIN)) {
+
+               post = postRepository.findById(id).orElseThrow(
+                       () -> new RuntimeException("해당 글이 없습니다.")
+               );
+
+           }else{
+               post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
+                       () -> new RuntimeException("해당 글이 없습니다.")
+               );
+           }
+           postRepository.delete(post);
+           return  new MsgResponseDto("게시글 삭제 성공",HttpStatus.OK.value());
+    }else{
+           return  new MsgResponseDto("게시글 삭제 실패",HttpStatus.BAD_REQUEST.value());
+       }
 
     }
 
