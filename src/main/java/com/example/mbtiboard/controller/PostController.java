@@ -2,7 +2,6 @@ package com.example.mbtiboard.controller;
 
 
 import com.example.mbtiboard.dto.*;
-import com.example.mbtiboard.dto.ResponseDto;
 import com.example.mbtiboard.security.UserDetailsImpl;
 import com.example.mbtiboard.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/post")
-    public ResponseDto savePost(@RequestBody PostWithMbtiRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public MsgResponseDto savePost(@RequestBody PostWithMbtiRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return postService.savePost(requestDto,userDetails.getUser());
     }
 
@@ -31,13 +30,12 @@ public class PostController {
     }
 
     @PutMapping("/post/{id}")
-    public ResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public MsgResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return postService.updatePost(id,requestDto,userDetails);
     }
 
     @DeleteMapping("/post/{id}")
-    public ResponseDto deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
+    public MsgResponseDto deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return postService.deletePost(id, userDetails);
     }
 }

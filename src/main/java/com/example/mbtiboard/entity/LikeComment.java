@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class LikesComment {
+public class LikeComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,13 +25,10 @@ public class LikesComment {
     @Column(nullable = false)
     private boolean likeCheck;
 
-    public LikesComment(User user, Comment comment) {
+    public LikeComment(User user, Comment comment) {
         this.user=user;
         this.comment=comment;
         this.likeCheck=true;
     }
-
-    public void likeCancel() { this.likeCheck=false; }
-    public void likeComment() { this.likeCheck=true; }
 
 }
