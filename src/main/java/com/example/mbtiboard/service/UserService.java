@@ -78,7 +78,7 @@ public class UserService {
         User user = new User(username, password, email, mbti, role);
         userRepository.save(user);
 
-        return new MsgResponseDto("회원가입성공", HttpStatus.OK.value());
+        return new MsgResponseDto("회원가입 성공", HttpStatus.OK.value());
     }
 
 

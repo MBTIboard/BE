@@ -8,5 +8,5 @@ import org.springframework.http.HttpStatus;
 @Setter
 public class RestApiException {
     private String errorMessage;
-    private HttpStatus httpStatus;
+    private int httpStatusCode;
 }

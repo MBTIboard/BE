@@ -42,7 +42,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostResponseDto getPost(Long id){
         Post post = postRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("해당 글이 없습니다.")
+                () -> new IllegalArgumentException("해당 게시글이 없습니다.")
         );
         return new PostResponseDto(post);
     }
@@ -52,12 +52,12 @@ public class PostService {
     public MsgResponseDto updatePost(Long id, PostWithMbtiRequestDto requestDto, UserDetailsImpl userDetails) {
         if(postRepository.existsByIdAndUser(id,userDetails.getUser() )) {
             Post post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
-                    () -> new RuntimeException("해당 글이 없습니다.")
+                    () -> new IllegalArgumentException("해당 게시글이 없습니다.")
             );
             post.update(requestDto);
             return new MsgResponseDto("게시글 수정 성공",HttpStatus.OK.value());
         }else{
-            return new MsgResponseDto("게시글 수정 실패",HttpStatus.BAD_REQUEST.value());
+            throw  new IllegalArgumentException("해당 게시글이 없습니다.");
         }
 
     }
@@ -68,18 +68,18 @@ public class PostService {
            if(userDetails.getUser().getRole().equals(UserRoleEnum.ADMIN)) {
 
                post = postRepository.findById(id).orElseThrow(
-                       () -> new RuntimeException("해당 글이 없습니다.")
+                       () -> new IllegalArgumentException("해당 게시글이 없습니다.")
                );
 
            }else{
                post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
-                       () -> new RuntimeException("해당 글이 없습니다.")
+                       () -> new IllegalArgumentException("해당 게시글이 없습니다.")
                );
            }
            postRepository.delete(post);
            return  new MsgResponseDto("게시글 삭제 성공",HttpStatus.OK.value());
     }else{
-           return  new MsgResponseDto("게시글 삭제 실패",HttpStatus.BAD_REQUEST.value());
+           throw  new IllegalArgumentException("해당 게시글이 없습니다.");
        }
 
     }
