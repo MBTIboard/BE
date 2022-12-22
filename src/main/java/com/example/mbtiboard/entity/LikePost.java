@@ -1,8 +1,14 @@
 package com.example.mbtiboard.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
-public class PostLikes {
+@Getter
+@Entity
+@NoArgsConstructor
+public class LikePost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +26,10 @@ public class PostLikes {
     private boolean likeCheck;
 
 
-    public PostLikes(User user, Post post) {
+    public LikePost(User user, Post post) {
         this.user = user;
         this.post = post;
         this.likeCheck = true;
     }
 
-    public void likeCancel() {
-        this.likeCheck=false;
-    }
-
-    public void likepost() {
-        this.likeCheck = true;
-    }
 }
