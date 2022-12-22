@@ -5,7 +5,6 @@ import com.example.mbtiboard.dto.*;
 import com.example.mbtiboard.security.UserDetailsImpl;
 import com.example.mbtiboard.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;

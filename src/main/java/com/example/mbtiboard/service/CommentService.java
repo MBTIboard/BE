@@ -43,7 +43,7 @@ public class CommentService {
             comment.update(requestDto);
             return new MsgResponseDto("댓글 수정 성공", HttpStatus.OK.value());
         } else {
-            return new MsgResponseDto("댓글 수정 실패", HttpStatus.BAD_REQUEST.value());
+            throw new IllegalArgumentException("댓글 작성자가 아닙니다.");
         }
     }
 
@@ -59,7 +59,7 @@ public class CommentService {
             commentRepository.deleteById(id);
             return new MsgResponseDto("댓글 삭제 성공", HttpStatus.OK.value());
         } else {
-            return new MsgResponseDto("댓글 삭제 실패", HttpStatus.BAD_REQUEST.value());
+            throw new IllegalArgumentException("댓글 작성자 또는 관리자가 아닙니다.");
         }
     }
 

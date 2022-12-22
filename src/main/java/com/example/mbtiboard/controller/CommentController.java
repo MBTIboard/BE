@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/comment")
 @RequiredArgsConstructor
@@ -16,12 +18,12 @@ public class CommentController {
 
     //댓글 작성
     @PostMapping("/{postId}")
-    public MsgResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public MsgResponseDto createComment(@PathVariable Long postId, @Valid @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return commentService.createComment(postId, requestDto, userDetails.getUser());
     }
     //댓글 수정
     @PutMapping("/{id}")
-    public MsgResponseDto updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public MsgResponseDto updateComment(@PathVariable Long id, @Valid  @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return commentService.updateComment(id, requestDto, userDetails.getUser());
     }
     //댓글 삭제

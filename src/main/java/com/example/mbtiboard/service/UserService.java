@@ -38,38 +38,37 @@ public class UserService {
         String username = signupRequestDto.getUsername();
         String password = signupRequestDto.getPassword();
         String email = signupRequestDto.getEmail();
-        String mbti = signupRequestDto.getMbti();
+        String mbti = signupRequestDto.getUserMbti();
 
         //아이디유효성검사
         if (Pattern.matches( "^[a-z0-9]*$",username)){
             if(username.length() < 4 || username.length() > 10){
-//                throw new IllegalArgumentException("아이디 길이를 4자 이상 10자 이하로 해주세요");
-                return new MsgResponseDto("아이디 길이를 4자 이상 10자 이하로 해주세요", HttpStatus.BAD_REQUEST.value());
+                throw new IllegalArgumentException("아이디 길이를 4자 이상 10자 이하로 해주세요");
             }
 
             //중복확인
             Optional<User> found = userRepository.findByUsername(username);
             if (found.isPresent()){
-                return new MsgResponseDto("중복된 아이디입니다.", HttpStatus.BAD_REQUEST.value());
+                throw new IllegalArgumentException("중복된 ID입니다.");
 
             }
         }else{
-            return new MsgResponseDto("아이디를 알파벳소문자 또는 숫자로만 구성해주세요", HttpStatus.BAD_REQUEST.value());
+            throw new IllegalArgumentException("아이디를 알파벳소문자 또는 숫자로만 구성해주세요");
         }
 
         //비밀번호유효성검사
         if (Pattern.matches( "^.(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$",password)){
             if(password.length() < 8 || password.length() > 15){
-                return new MsgResponseDto("비밀번호 길이를 8자 이상 15자 이하로 해주세요", HttpStatus.BAD_REQUEST.value());
+                throw new IllegalArgumentException("비밀번호 길이를 8자 이상 15자 이하로 해주세요");
             }
         } else {
-            return new MsgResponseDto("비밀번호에 알파벳대소문자, 숫자, 특수문자가 포함되게 해주세요", HttpStatus.BAD_REQUEST.value());
+            throw new IllegalArgumentException("비밀번호에 알파벳대소문자, 숫자, 특수문자가 포함되게 해주세요");
         }
         // 사용자 ROLE 확인
         UserRoleEnum role = UserRoleEnum.USER;
         if (signupRequestDto.isAdmin()) {
             if (!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
+                throw new IllegalArgumentException("관리자 토근값이 일치하지 않습니다.");
             }
             role = UserRoleEnum.ADMIN;
         }
