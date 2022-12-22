@@ -2,6 +2,8 @@ package com.example.mbtiboard.jwt;
 
 
 import com.example.mbtiboard.dto.SecurityExceptionDto;
+
+//"Java Object" =Serialize=> "JSON", (2) "JSON" =Deserialize=> "Java Object" 변환시켜주는 것
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,8 @@ import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
-
+//OncePerRequestFilter - 어느 서블릿 컨테이너에서나 요청 당 한 번의 실행을 보장하는 것을 목표로 한다.
+//doFilterInternal메소드와 HttpServletRequest와 HttpServletResponse인자를 제공한다.
     private final JwtUtil jwtUtil;
 
     @Override

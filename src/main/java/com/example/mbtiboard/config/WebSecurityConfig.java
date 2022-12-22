@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-//  스프링 시큐리티(Spring Seurity) 프레임워크에서 제공하는 클래스 중 하나로
+// BCryptPasswordEncoder - 스프링 시큐리티(Spring Seurity) 프레임워크에서 제공하는 클래스 중 하나로
 // 비밀번호를 암호화하는 데 사용할 수 있는 메서드를 가진 클래스 https://kimvampa.tistory.com/129
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,6 +60,8 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // csrf는 로그인할때 받은 쿠키를 다른곳에서 사용하는것을 방지하는 코드 (disable한다)
+        // html에서 csrf 토큰을 주어야만 사용이 되게 한다는 것
         http.csrf().disable();
 
         // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
@@ -85,7 +87,7 @@ public class WebSecurityConfig {
         // 서버에서 응답하는 리소스에 접근 가능한 출처를 명시
         // Access-Control-Allow-Origin
         config.addAllowedOrigin("http://localhost:3000/");
-//        config.addAllowedOrigin("http://charleybucket.s3-website.ap-northeast-2.amazonaws.com"); //요거 변경하시면 됩니다.
+//        config.addAllowedOrigin("http://charleybucket.s3-website.ap-northeast-2.amazonaws.com");
 
         // 특정 헤더를 클라이언트 측에서 꺼내어 사용할 수 있게 지정
         // 만약 지정하지 않는다면, Authorization 헤더 내의 토큰 값을 사용할 수 없음
