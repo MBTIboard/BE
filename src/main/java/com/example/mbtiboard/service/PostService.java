@@ -49,7 +49,7 @@ public class PostService {
 
 
     @Transactional
-    public MsgResponseDto updatePost(Long id, PostRequestDto requestDto, UserDetailsImpl userDetails) {
+    public MsgResponseDto updatePost(Long id, PostWithMbtiRequestDto requestDto, UserDetailsImpl userDetails) {
         if(postRepository.existsByIdAndUser(id,userDetails.getUser() )) {
             Post post = postRepository.findByIdAndUser(id, userDetails.getUser()).orElseThrow(
                     () -> new RuntimeException("해당 글이 없습니다.")
@@ -84,14 +84,4 @@ public class PostService {
 
     }
 
-    public Map<String, String> validateHandling(Errors errors) {
-        Map<String, String> validatorResult = new HashMap<>();
-
-        for (FieldError error : errors.getFieldErrors()) {
-            String validKeyName = String.format("valid_%s", error.getField());
-            validatorResult.put(validKeyName, error.getDefaultMessage());
-        }
-
-        return validatorResult;
-    }
 }

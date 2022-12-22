@@ -1,6 +1,5 @@
 package com.example.mbtiboard.entity;
 
-import com.example.mbtiboard.dto.PostRequestDto;
 import com.example.mbtiboard.dto.PostWithMbtiRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,9 +46,10 @@ public class Post extends Timestamped {
         this.user = user;
     }
 
-    public void update(PostRequestDto requestDto){
+    public void update(PostWithMbtiRequestDto requestDto){
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.cateMbti = requestDto.getCateMbti();
     }
 
 
